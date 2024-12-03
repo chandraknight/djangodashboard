@@ -1,13 +1,14 @@
 from django import forms
-from .models import MyUser, Student, Teacher
+from .models import MyUser
 
 class UserRegistrationForm(forms.ModelForm):
+
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
     
     class Meta:
         model = MyUser
-        fields = ['username', 'email', 'password', 'role']
+        fields = [ 'email', 'password']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -17,8 +18,13 @@ class UserRegistrationForm(forms.ModelForm):
         if password != confirm_password:
             raise forms.ValidationError("Passwords do not match")
         return cleaned_data
-
+    def save(self, commit=True):
+        user = super(UserRegistrationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
 
 class LoginForm(forms.Form):
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField(label="Email", required=True)
+    password = forms.CharField(widget=forms.PasswordInput, label="Password", required=True)

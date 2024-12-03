@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MyUser, Student, Teacher
+from .models import MyUser
 
 # Custom admin for MyUser
 @admin.register(MyUser)
@@ -12,14 +12,5 @@ class MyUserAdmin(admin.ModelAdmin):
         return obj.get_role_display()  # Converts "ADMIN" to "Admin" it means to display in human readable format
     get_role.short_description = 'Role'  # Name for the column in the admin panel, we can choose our name
 
-# Custom admin for Student
-@admin.register(Student)
-class StudentAdmin(admin.ModelAdmin):
-    list_display = ('email', 'username', 'is_active')
-    search_fields = ('email', 'username')
 
-# Custom admin for Teacher
-@admin.register(Teacher)
-class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('email', 'username', 'is_active')
-    search_fields = ('email', 'username')
+

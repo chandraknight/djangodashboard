@@ -2,63 +2,51 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, LoginForm
-from .models import MyUser, Student, Teacher
+from .models import MyUser
+from django.views.generic import CreateView, FormView
+
+
+
+class register_view(CreateView):
+    form_class= UserRegistrationForm
+    template_name= 'register.html'
+    success_url='/login/'
+
+
 
 # User Registration View
-def register_user(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)  # Don't save to Database as password need to be hashed
-            user.set_password(form.cleaned_data['password'])  # Hash password for
-            user.save()  # Save the user
-            return redirect('login')
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'register.html', {'form': form})
+class LoginView( FormView):
+    form_class = LoginForm
+    
+    success_url = 'dashboard.html'
+    template_name = 'loginpage.html'
 
-
-
-def login_user(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = authenticate(request, email=email, password=password)
-            if user:
-                login(request, user)
-                  # Redirect to dashboard after login
-                if request.user.role == MyUser.Role.ADMIN:
-                    return render(request, 'admin_dashboard.html')
-                elif request.user.role == MyUser.Role.TEACHER:
-                    return render(request, 'teacher_dashboard.html')
-                elif request.user.role == MyUser.Role.STUDENT:
-                    return render(request, 'student_dashboard.html')
-                else:
-                    return render(request, 'dashboard.html')
-               
+    
+    def form_valid(self, form):
+        request=self.request
+        
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+                #   Redirect to dashboard after login
+            if user.role == MyUser.Role.ADMIN:
+                return render(request, 'admin_dashboard.html')
+            elif user.role == MyUser.Role.DOCTOR:
+                return render(request, 'dashboard.html')
+            elif user.role == MyUser.Role.PATIENT:
+                return render(request, 'student_dashboard.html')
             else:
-                return render(request, 'login.html', {'form': form, 'error': 'Invalid credentials'})
-    else:
-        form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+                return render(request, 'dashboard.html')
+               
+        else:
+            return render(request, 'loginpage.html', {'form': form, 'error': 'Invalid credentials'})
 
 
 
-def logout_user(request):
-    logout(request)
-    return redirect('login')
 
 
 
-# @login_required
-# def dashboard(request):
-#     if request.user.role == MyUser.Role.ADMIN:
-#         return render(request, 'admin_dashboard.html')
-#     elif request.user.role == MyUser.Role.TEACHER:
-#         return render(request, 'teacher_dashboard.html')
-#     elif request.user.role == MyUser.Role.STUDENT:
-#         return render(request, 'student_dashboard.html')
-#     else:
-#         return render(request, 'dashboard.html')
+
+

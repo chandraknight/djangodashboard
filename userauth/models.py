@@ -1,18 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager,PermissionsMixin
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 # Create your models here.
 
 class UserManager(BaseUserManager):
     #overriding the create user method
-    def create_user(self, username, email,password=None,**extra_field ):
-        if username is None:
-            raise TypeError("User should have valid username")
+    def create_user(self,  email,password=None,**extra_field ):
+       
         if email is None:
             raise TypeError("There should be valid email address")
 
-        user = self.model(username=username, email=self.normalize_email(email), **extra_field)
+        user = self.model(email=self.normalize_email(email), **extra_field)
         user.set_password(password)
         user.save()
         return user
@@ -38,10 +36,10 @@ class UserManager(BaseUserManager):
 class MyUser(AbstractBaseUser, PermissionsMixin):
     class Role(models.TextChoices):
         ADMIN = "ADMIN", "Admin"
-        STUDENT = "STUDENT", "Student"
-        TEACHER = "TEACHER", "Teacher"
+        DOCTOR = "DOCTOR", "Doctor"
+        PATIENT = "PATIENT", "Patient"
 
-    base_role= Role.STUDENT
+    base_role= Role.DOCTOR
     role=models.CharField(max_length=40, choices=Role.choices)
     username= models.CharField(max_length=40, unique=True)
     email= models.EmailField(max_length=225, unique=True,db_index=True )
@@ -60,57 +58,3 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     #telling how to manage the user to django
     objects= UserManager()
     
-# Proxy models for specific roles
-# Extend myuser to impose the role specific behaviour
-class StudentManager(BaseUserManager):
-    def get_queryset(self):
-        return super().get_queryset().filter(role=MyUser.Role.STUDENT)
-
-class Student(MyUser):
-    base_role = MyUser.Role.STUDENT
-    objects = StudentManager()
-
-    class Meta:
-        proxy = True
-
-    def welcome(self):
-        return "Welcome, Student!"
-
-class TeacherManager(BaseUserManager):
-    def get_queryset(self):
-        return super().get_queryset().filter(role=MyUser.Role.TEACHER)
-
-class Teacher(MyUser):
-    base_role = MyUser.Role.TEACHER
-    objects = TeacherManager()
-
-    class Meta:
-        proxy = True
-
-    def welcome(self):
-        return "Welcome, Teacher!"
-
-# Signals to create profiles
-# This is to store the addition information
-# Signals automatically create profiles when a user with a specific role is created.
-
-class StudentProfile(models.Model):
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    student_id = models.IntegerField(null=True, blank=True)
-    #we can add specific details 
-
-@receiver(post_save, sender=Student)
-def create_student_profile(sender, instance, created, **kwargs):
-    if created and instance.role == MyUser.Role.STUDENT:
-        StudentProfile.objects.create(user=instance)
-
-#similarly for teachers
-
-class TeacherProfile(models.Model):
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    teacher_id = models.IntegerField(null=True, blank=True)
-
-@receiver(post_save, sender=Teacher)
-def create_teacher_profile(sender, instance, created, **kwargs):
-    if created and instance.role == MyUser.Role.TEACHER:
-        TeacherProfile.objects.create(user=instance)
