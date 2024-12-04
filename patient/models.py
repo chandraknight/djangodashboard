@@ -62,6 +62,6 @@ class PatientProfile(models.Model):
     
 
 @receiver(post_save, sender=Patient)
-def create_student_profile(sender, instance, created, **kwargs):
-    if created and instance.role == MyUser.Role.STUDENT:
+def create_patient_profile(sender, instance, created, **kwargs):
+    if created and instance.role == MyUser.Role.PATIENT:
         PatientProfile.objects.create(user=instance)

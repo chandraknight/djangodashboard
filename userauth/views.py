@@ -18,7 +18,7 @@ class register_view(CreateView):
 class LoginView( FormView):
     form_class = LoginForm
     
-    success_url = 'dashboard.html'
+    success_url = 'patientdashboard.html'
     template_name = 'loginpage.html'
 
     
@@ -34,9 +34,9 @@ class LoginView( FormView):
             if user.role == MyUser.Role.ADMIN:
                 return render(request, 'admin_dashboard.html')
             elif user.role == MyUser.Role.DOCTOR:
-                return render(request, 'dashboard.html')
+                return render(request, 'doctor_dashboard.html')
             elif user.role == MyUser.Role.PATIENT:
-                return render(request, 'student_dashboard.html')
+                return render(request, 'patient_dashboard.html')
             else:
                 return render(request, 'dashboard.html')
                

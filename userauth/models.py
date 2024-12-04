@@ -5,17 +5,19 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager,Permiss
 
 class UserManager(BaseUserManager):
     #overriding the create user method
-    def create_user(self,  email,password=None,**extra_field ):
-       
+    def create_user(self, username, email,password=None,**extra_field ):
+        if username is None:
+            raise TypeError("There should be valid username")
+        
         if email is None:
             raise TypeError("There should be valid email address")
 
         user = self.model(email=self.normalize_email(email), **extra_field)
         user.set_password(password)
-        user.save()
+        user.save(using=self.db)
         return user
     
-    def create_superuser(self, username,email,password=None):
+    def create_superuser(self,email, username ,password=None):
         if username is None:
             raise TypeError('User should have a valid username')
         if password is None:
@@ -24,7 +26,7 @@ class UserManager(BaseUserManager):
             raise TypeError('User should have a valid Email')
         
     
-        user=self.create_user(username, email, password)
+        user=self.create_user( username, email, password)
         user.is_superuser = True
         user.is_staff = True
         user.role = MyUser.Role.ADMIN
@@ -39,8 +41,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         DOCTOR = "DOCTOR", "Doctor"
         PATIENT = "PATIENT", "Patient"
 
-    base_role= Role.DOCTOR
-    role=models.CharField(max_length=40, choices=Role.choices)
+    
+    role=models.CharField(max_length=40, choices=Role.choices, default=Role.PATIENT)
     username= models.CharField(max_length=40, unique=True)
     email= models.EmailField(max_length=225, unique=True,db_index=True )
     is_verified = models.BooleanField(default=False)
