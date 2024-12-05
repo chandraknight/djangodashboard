@@ -4,7 +4,7 @@ from .forms import PatientProfileForm
 from .models import PatientProfile
 from common.decorators import check_role
 
-@check_role('patient')
+# @check_role('patient')
 def update_profile(request):
     # Ensure the patient profile exists for the logged-in user
     try:

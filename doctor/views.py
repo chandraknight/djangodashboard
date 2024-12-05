@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from .forms import Patient_Search_form
 from patient.models import PatientProfile
-from common.decorators import check_role
+# from common.decorators import check_role
 
 
     
-@check_role('doctor')
-def doctordashboard(request):
+# @check_role('doctor')
+def doctordashboard_search(request):
     patient_data = None
     error_message = None
 

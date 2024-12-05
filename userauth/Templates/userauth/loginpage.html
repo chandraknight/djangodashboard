@@ -1,8 +1,10 @@
 {% block content %}
     <h1>Login</h1>
-    <form method='POST'> {% csrf_token %}
+    <form method='POST'> 
+      {% csrf_token %}
       {{ form }}
       <button type='submit' class='btn btn-default'>Submit</button>
+      <p style="color: red;"> {{error}}</p>
     </form>
 
 {% endblock %}

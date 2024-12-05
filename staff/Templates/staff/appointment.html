@@ -1,0 +1,56 @@
+<h1>Staff Dashboard</h1>
+<h2>Create Appointment</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label for="patient">Patient:</label>
+    <select name="patient" id="patient">
+        {% for patient in patients %}
+            <option value="{{ patient.id }}">{{ patient.username }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="doctor">Doctor:</label>
+    <select name="doctor" id="doctor">
+        <option value="">Unassigned</option>
+        {% for doctor in doctors %}
+            <option value="{{ doctor.id }}">{{ doctor.username }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="symptoms">Symptoms:</label>
+    <textarea name="symptoms" id="symptoms" required></textarea>
+
+    <label for="date">Appointment Date:</label>
+    <input type="datetime-local" name="date" id="date" required>
+
+    <button type="submit">Create Appointment</button>
+</form>
+
+<h2>Existing Appointments</h2>
+<table>
+    <tr>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Symptoms</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.patient.username }}</td>
+            <td>
+                {% if appointment.doctor %}
+                    {{ appointment.doctor.username }}
+                {% else %}
+                    Unassigned
+                {% endif %}
+            </td>
+            <td>{{ appointment.symptoms }}</td>
+            <td>{{ appointment.date }}</td>
+            <td>{{ appointment.status }}</td>
+        </tr>
+    {% endfor %}
+
+    {{message}}
+</table>

@@ -3,5 +3,6 @@ from doctor import views
 
 
 urlpatterns=[
-            path('dashboard/', views.doctordashboard, name='doctordashboard')]
+            
+            path('dashboard/', views.doctordashboard_search, name='doctordashboard')]
 
