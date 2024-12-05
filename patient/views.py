@@ -1,10 +1,10 @@
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from .forms import PatientProfileForm
 from .models import PatientProfile
+from common.decorators import check_role
 
-@login_required
+@check_role('patient')
 def update_profile(request):
     # Ensure the patient profile exists for the logged-in user
     try:
@@ -17,13 +17,17 @@ def update_profile(request):
         form = PatientProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return render(request,'patient_dashboard.html')  
+            return render(request,'patient/patient_dashboard.html')  
     else:
         form = PatientProfileForm(instance=profile)
     
-    return render(request, 'update_profile.html', {'form': form})
+    return render(request, 'userauth/update_profile.html', {'form': form})
 
 
+
+@check_role('patient')
+def patientdashboard(request):
+    return render(request, 'patient/patient_dashboard.html')
 
 
 

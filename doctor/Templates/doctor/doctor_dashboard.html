@@ -1,0 +1,33 @@
+<!-- doctor_dashboard.html -->
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Patient</title>
+</head>
+<body>
+    <h1>Search Patient by ID</h1>
+    <form method="post" action="{% url 'doctordashboard' %}">
+        {% csrf_token %}
+        {{ form_search.as_p }}  <!-- Render form fields -->
+        <button type="submit">Search</button>
+    </form>
+
+    {% if patient_data %}
+        <h2>Patient Details</h2>
+        <p><strong>Name:</strong> {{ patient_data.user.username }}</p>
+        <p><strong>Patient ID:</strong> {{ patient_data.Patient_id }}</p>
+        <p><strong>Phone Number:</strong> {{ patient_data.phone_number }}</p>
+        <p><strong>Address:</strong> {{ patient_data.address }}</p>
+        <p><strong>Date of Birth:</strong> {{ patient_data.dob }}</p>
+        <p><strong>Sex:</strong> {{ patient_data.get_sex_display }}</p>
+        <p><strong>Blood Group:</strong> {{ patient_data.blood_group }}</p>
+        <p><strong>Age:</strong> {{ patient_data.age }}</p>
+        <p><strong>Occupation:</strong> {{ patient_data.occupation }}</p>
+    {% elif error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+</body>
+</html>
+{% endblock %}

@@ -9,7 +9,7 @@ from django.views.generic import CreateView, FormView
 
 class register_view(CreateView):
     form_class= UserRegistrationForm
-    template_name= 'register.html'
+    template_name= 'userauth/register.html'
     success_url='/login/'
 
 
@@ -18,8 +18,8 @@ class register_view(CreateView):
 class LoginView( FormView):
     form_class = LoginForm
     
-    success_url = 'patientdashboard.html'
-    template_name = 'loginpage.html'
+    success_url = 'userauth/patientdashboard.html'
+    template_name = 'userauth/loginpage.html'
 
     
     def form_valid(self, form):
@@ -34,14 +34,14 @@ class LoginView( FormView):
             if user.role == MyUser.Role.ADMIN:
                 return render(request, 'admin_dashboard.html')
             elif user.role == MyUser.Role.DOCTOR:
-                return render(request, 'doctor_dashboard.html')
+                return redirect('doctordashboard')
             elif user.role == MyUser.Role.PATIENT:
-                return render(request, 'patient_dashboard.html')
+                return redirect('patientdashboard')
             else:
-                return render(request, 'dashboard.html')
+                return redirect('patientdashboard')
                
         else:
-            return render(request, 'loginpage.html', {'form': form, 'error': 'Invalid credentials'})
+            return render(request, 'userauth/loginpage.html', {'form': form, 'error': 'Invalid credentials'})
 
 
 
