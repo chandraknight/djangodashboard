@@ -26,5 +26,5 @@ class UserRegistrationForm(forms.ModelForm):
         return user
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label="Email", required=True)
-    password = forms.CharField(widget=forms.PasswordInput, label="Password", required=True)
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'User Name'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))

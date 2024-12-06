@@ -9,7 +9,7 @@ class DoctorProfile(models.Model):
         max_length=15,
     )
     NMC_registered_number = models.CharField(max_length=50, unique=True)
-    address = models.TextField()
+    address = models.CharField(max_length=30)
     specialization = models.CharField(max_length=100, null=True, blank=True)
     availability_status = models.BooleanField(default=True)  # True for available, False for not
 

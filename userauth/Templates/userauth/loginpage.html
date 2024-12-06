@@ -1,10 +1,118 @@
 {% block content %}
-    <h1>Login</h1>
-    <form method='POST'> 
-      {% csrf_token %}
-      {{ form }}
-      <button type='submit' class='btn btn-default'>Submit</button>
-      <p style="color: red;"> {{error}}</p>
-    </form>
+
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+  body {
+    background: #f4f6f9; 
+    font-family: Raleway, sans-serif;
+    color: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  .login {
+    background: #fff;
+    padding: 40px 50px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .login h2 {
+    color: #3498db;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .login p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #555;
+  }
+
+  .login input {
+    width: 100%;
+    padding: 14px 12px;
+    font-size: 16px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+  }
+
+  .login input:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+
+  .login input[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .login input[type="submit"]:hover {
+    background-color: #2980b9;
+  }
+
+  .links {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .links a {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 14px;
+    transition: text-decoration 0.3s ease;
+  }
+
+  .links a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 600px) {
+    .login {
+      padding: 30px;
+      width: 90%;
+    }
+
+    .login h2 {
+      font-size: 24px;
+    }
+  }
+</style>
+
+<form class="login" method="post">
+  {% csrf_token %}
+  <h2>Welcome Back!</h2>
+  <p>Please log in to continue</p>
+
+  <!-- Replace static fields with Django form fields -->
+  <div class="form-group">
+    {{ form.email }}
+  </div>
+  <div class="form-group">
+    {{ form.password }}
+  </div>
+
+  <input type="submit" value="Log In" />
+
+  <div class="links">
+    <a href="#">Forgot password?</a>
+    <a href="{% url 'register' %}">Create an Account</a>
+  </div>
+</form>
 
 {% endblock %}

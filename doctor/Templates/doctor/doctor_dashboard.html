@@ -1,33 +1,126 @@
-<!-- doctor_dashboard.html -->
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Patient</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            color: #333;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Styling */
+        h1, h2, h4 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form input[type="text"], form button {
+            width: 100%;
+            max-width: 500px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        form button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Profile Update Link */
+        h4 a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        h4 a:hover {
+            text-decoration: underline;
+        }
+
+        /* Patient Details */
+        .patient-details {
+            margin-top: 20px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 8px;
+        }
+
+        .patient-details p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .patient-details p strong {
+            color: #34495e;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: red;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Search Patient by ID</h1>
-    <form method="post" action="{% url 'doctordashboard' %}">
-        {% csrf_token %}
-        {{ form_search.as_p }}  <!-- Render form fields -->
-        <button type="submit">Search</button>
-    </form>
-    <h4>Upadate Your Profile <a href="{% url 'doctorprofile' %}">Click Here</a></h4>
-    {% if patient_data %}
-        <h2>Patient Details</h2>
-        <p><strong>Name:</strong> {{ patient_data.user.username }}</p>
-        <p><strong>Patient ID:</strong> {{ patient_data.Patient_id }}</p>
-        <p><strong>Phone Number:</strong> {{ patient_data.phone_number }}</p>
-        <p><strong>Address:</strong> {{ patient_data.address }}</p>
-        <p><strong>Date of Birth:</strong> {{ patient_data.dob }}</p>
-        <p><strong>Sex:</strong> {{ patient_data.get_sex_display }}</p>
-        <p><strong>Blood Group:</strong> {{ patient_data.blood_group }}</p>
-        <p><strong>Age:</strong> {{ patient_data.age }}</p>
-        <p><strong>Occupation:</strong> {{ patient_data.occupation }}</p>
-    {% elif error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
+    <div class="container">
+        <h1>Search Patient by ID</h1>
+        <form method="post" action="{% url 'doctordashboard' %}">
+            {% csrf_token %}
+            {{ form_search.as_p }} <!-- Render form fields -->
+            <button type="submit">Search</button>
+        </form>
+        <h4>Update Your Profile <a href="{% url 'doctorprofile' %}">Click Here</a></h4>
+
+        {% if patient_data %}
+            <div class="patient-details">
+                <h2>Patient Details</h2>
+                <p><strong>Name:</strong> {{ patient_data.user.username }}</p>
+                <p><strong>Patient ID:</strong> {{ patient_data.Patient_id }}</p>
+                <p><strong>Phone Number:</strong> {{ patient_data.phone_number }}</p>
+                <p><strong>Address:</strong> {{ patient_data.address }}</p>
+                <p><strong>Date of Birth:</strong> {{ patient_data.dob }}</p>
+                <p><strong>Sex:</strong> {{ patient_data.get_sex_display }}</p>
+                <p><strong>Blood Group:</strong> {{ patient_data.blood_group }}</p>
+                <p><strong>Age:</strong> {{ patient_data.age }}</p>
+                <p><strong>Occupation:</strong> {{ patient_data.occupation }}</p>
+            </div>
+        {% elif error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+    </div>
 </body>
 </html>
 {% endblock %}
