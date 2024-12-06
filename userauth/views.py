@@ -5,7 +5,8 @@ from .forms import UserRegistrationForm, LoginForm
 from .models import MyUser
 from django.views.generic import CreateView, FormView
 
-
+from django.contrib.auth import logout
+from django.views.generic import View
 
 class register_view(CreateView):
     form_class= UserRegistrationForm
@@ -15,7 +16,7 @@ class register_view(CreateView):
 
 
 # User Registration View
-class LoginView( FormView):
+class LoginView(FormView):
     form_class = LoginForm
     
     
@@ -43,6 +44,18 @@ class LoginView( FormView):
                
         else:
             return render(request, 'userauth/loginpage.html', {'form': form, 'error': 'Invalid credentials'})
+
+
+# Option 1: Basic Class-Based Logout View
+class LogoutView(View):
+    """
+    Simple logout view that logs out the user and redirects to login page.
+    """
+
+    def get(self, request):
+        logout(request)
+        return redirect('login')
+
 
 
 

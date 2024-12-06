@@ -13,7 +13,7 @@
         {{ form_search.as_p }}  <!-- Render form fields -->
         <button type="submit">Search</button>
     </form>
-
+    <h4>Upadate Your Profile <a href="{% url 'doctorprofile' %}">Click Here</a></h4>
     {% if patient_data %}
         <h2>Patient Details</h2>
         <p><strong>Name:</strong> {{ patient_data.user.username }}</p>

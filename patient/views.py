@@ -21,11 +21,11 @@ def update_profile(request):
     else:
         form = PatientProfileForm(instance=profile)
     
-    return render(request, 'userauth/update_profile.html', {'form': form})
+    return render(request, 'patient/update_profile.html', {'form': form})
 
 
 
-@check_role('patient')
+# @check_role('patient')
 def patientdashboard(request):
     return render(request, 'patient/patient_dashboard.html')
 
