@@ -7,6 +7,8 @@ from django.views import View
 from django.views.generic import FormView
 from django.http import HttpResponseForbidden
 from userauth.models import MyUser
+from django.views.generic import ListView
+from appointment.models import Appointment
 
     
 # @check_role('doctor')
@@ -66,3 +68,17 @@ class DoctorProfileView(FormView):
 
         return render(request, 'doctor/doctor_profile.html', {'form': form})
     
+
+    
+
+class DoctorsAppointment(ListView):
+    template_name = 'doctor/doctor_appointment.html'
+    model = Appointment
+    context_object_name = 'my_appointments'
+
+    def get_queryset(self):
+        # Ensure the doctor is logged in and fetch their assigned appointments
+        doctor = self.request.user
+        
+        # Filter appointments assigned to the logged-in doctor
+        return Appointment.objects.filter(doctor=doctor)

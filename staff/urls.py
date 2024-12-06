@@ -1,7 +1,8 @@
 from django.urls import path
 from staff import views
+from staff.views import StaffDashboard
 
-urlpatterns=[path('staff_dashboard_home/', views.staffdashboard, name='staffdashboardhome'),]
+urlpatterns=[path('staff_dashboard_home/', StaffDashboard.as_view(), name='staffdashboardhome'),]
     
             
 
