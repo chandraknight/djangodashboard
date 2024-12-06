@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from doctor.forms import Patient_Search_form, DoctorProfileForm
 from patient.models import PatientProfile
 from doctor.models import DoctorProfile
-# from common.decorators import check_role
+from common.decorators import check_role
 from django.views import View
 from django.views.generic import FormView
 from django.http import HttpResponseForbidden

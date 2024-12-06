@@ -14,9 +14,9 @@ def check_role(required_role):
             user_role = getattr(request.user, 'role', None)  # Assuming the role is stored in the user model
             if user_role != required_role:
                 if user_role== 'patient':
-                    return HttpResponseRedirect(reverse('patientdashboard'))  # Redirect to dashboard if role doesn't match
+                    return HttpResponseRedirect(reverse('home'))  # Redirect to dashboard if role doesn't match
                 else:
-                    return HttpResponseRedirect(reverse('doctordashboard'))
+                    return HttpResponseRedirect(reverse('home'))
             return view_func(request, *args, **kwargs)
         return _wrapped_view
     return decorator
