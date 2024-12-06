@@ -12,24 +12,65 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: #f4f4f9;
+            background: #f1f1f1;
             color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
-        /* Container */
+        .navbar {
+            background-color: #3498db;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+            z-index: 1000; /* Keep navbar on top */
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 18px;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ffeb3b;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
         .container {
             max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
+            margin-top: 90px; /* Adjusted for fixed navbar */
+            margin-left: 200px;
+            padding: 30px;
             background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
         }
 
-        /* Form Styling */
-        h1, h2, h4 {
+        h1 {
+            font-size: 2rem;
+            color: #2d3436;
             text-align: center;
-            color: #2c3e50;
         }
 
         form {
@@ -41,7 +82,7 @@
         form input[type="text"], form button {
             width: 100%;
             max-width: 500px;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -59,23 +100,13 @@
             background-color: #2980b9;
         }
 
-        /* Profile Update Link */
-        h4 a {
-            color: #e74c3c;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        h4 a:hover {
-            text-decoration: underline;
-        }
-
         /* Patient Details */
         .patient-details {
             margin-top: 20px;
             padding: 20px;
-            background: #ecf0f1;
+            background: #f7f7f7;
             border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .patient-details p {
@@ -87,14 +118,49 @@
             color: #34495e;
         }
 
+        /* Update Profile Link */
+        h4 a {
+            color: #0984e3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        h4 a:hover {
+            text-decoration: underline;
+        }
+
         /* Error Message */
         .error-message {
             color: red;
             text-align: center;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            form input[type="text"], form button {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">DentalCare</div>
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
     <div class="container">
         <h1>Search Patient by ID</h1>
         <form method="post" action="{% url 'doctordashboard' %}">
@@ -102,6 +168,7 @@
             {{ form_search.as_p }} <!-- Render form fields -->
             <button type="submit">Search</button>
         </form>
+        
         <h4>Update Your Profile <a href="{% url 'doctorprofile' %}">Click Here</a></h4>
 
         {% if patient_data %}
@@ -121,6 +188,7 @@
             <p class="error-message">{{ error_message }}</p>
         {% endif %}
     </div>
+
 </body>
 </html>
 {% endblock %}

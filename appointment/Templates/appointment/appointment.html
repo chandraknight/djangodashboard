@@ -1,56 +1,258 @@
-<h1>Staff Dashboard</h1>
-<h2>Create Appointment</h2>
-<form method="POST">
-    {% csrf_token %}
-    <label for="patient">Patient:</label>
-    <select name="patient" id="patient">
-        {% for patient in patients %}
-            <option value="{{ patient.id }}">{{ patient.username }}</option>
-        {% endfor %}
-    </select>
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            color: #333;
+        }
 
-    <label for="doctor">Doctor:</label>
-    <select name="doctor" id="doctor">
-        <option value="">Unassigned</option>
-        {% for doctor in doctors %}
-            <option value="{{ doctor.id }}">{{ doctor.username }}</option>
-        {% endfor %}
-    </select>
+        /* Navbar */
+        .navbar {
+            background-color: #3498db;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+        }
 
-    <label for="symptoms">Symptoms:</label>
-    <textarea name="symptoms" id="symptoms" required></textarea>
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 18px;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
 
-    <label for="date">Appointment Date:</label>
-    <input type="datetime-local" name="date" id="date" required>
+        .navbar a:hover {
+            color: #ffeb3b;
+        }
 
-    <button type="submit">Create Appointment</button>
-</form>
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-<h2>Existing Appointments</h2>
-<table>
-    <tr>
-        <th>Patient</th>
-        <th>Doctor</th>
-        <th>Symptoms</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
-    {% for appointment in appointments %}
-        <tr>
-            <td>{{ appointment.patient.username }}</td>
-            <td>
-                {% if appointment.doctor %}
-                    {{ appointment.doctor.username }}
-                {% else %}
-                    Unassigned
-                {% endif %}
-            </td>
-            <td>{{ appointment.symptoms }}</td>
-            <td>{{ appointment.date }}</td>
-            <td>{{ appointment.status }}</td>
-        </tr>
-    {% endfor %}
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
 
-    {{message}}
-</table>
+        h1 {
+            font-size: 2rem;
+            color: #2d3436;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        form select, form textarea, form input[type="datetime-local"], form button {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        form select, form textarea {
+            background: #fafafa;
+        }
+
+        form button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        form button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table td button {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        table td button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Message */
+        .message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: green;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            form select, form textarea, form input[type="datetime-local"], form button {
+                max-width: 100%;
+            }
+
+            table th, table td {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">DentalCare</div>
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Staff Dashboard</h1>
+        <h2>Create Appointment</h2>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="patient">Patient:</label>
+            <select name="patient" id="patient">
+                {% for patient in patients %}
+                    <option value="{{ patient.id }}">{{ patient.username }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="doctor">Doctor:</label>
+            <select name="doctor" id="doctor">
+                <option value="">Unassigned</option>
+                {% for doctor in doctors %}
+                    <option value="{{ doctor.id }}">{{ doctor.username }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="symptoms">Symptoms:</label>
+            <textarea name="symptoms" id="symptoms" required></textarea>
+
+            <label for="date">Appointment Date:</label>
+            <input type="datetime-local" name="date" id="date" required>
+
+            <button type="submit">Create Appointment</button>
+        </form>
+
+        <h2>Existing Appointments</h2>
+        <table>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Symptoms</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.patient.username }}</td>
+                    <td>
+                        {% if appointment.doctor %}
+                            {{ appointment.doctor.username }}
+                        {% else %}
+                            Unassigned
+                        {% endif %}
+                    </td>
+                    <td>{{ appointment.symptoms }}</td>
+                    <td>{{ appointment.date }}</td>
+                    <td>{{ appointment.status }}</td>
+                    <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% if message %}
+            <div class="message">{{ message }}</div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Optional: Additional JS functionality (e.g., form validation)
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function (e) {
+            const patient = document.getElementById('patient').value;
+            const doctor = document.getElementById('doctor').value;
+            const symptoms = document.getElementById('symptoms').value;
+            const date = document.getElementById('date').value;
+            
+            if (!patient || !symptoms || !date) {
+                alert("Please fill all the required fields.");
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

@@ -17,8 +17,39 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
 
+        .navbar {
+            background-color: #3498db;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 18px;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ffeb3b;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Dashboard Container */
         .dashboard-container {
             background: #ffffff;
             border-radius: 10px;
@@ -27,6 +58,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             padding: 30px;
             text-align: center;
+            margin-top: 20px;
         }
 
         h1 {
@@ -104,13 +136,7 @@
             color: #0984e3;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .profile-info div {
-                width: 100%;
-            }
-        }
-
+        /* Footer */
         .footer {
             margin-top: 40px;
             font-size: 0.9rem;
@@ -122,13 +148,37 @@
             color: #0984e3;
             font-weight: 600;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-info div {
+                width: 100%;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">DentalCare</div>
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
     <div class="dashboard-container">
         <h1>Welcome to Your Patient Dashboard</h1>
         <p>Here you can manage your appointments, update your profile, and track your dental health.</p>
-        
+
         <!-- Profile Section -->
         <div class="profile-section">
             <h2>Your Profile</h2>
@@ -167,6 +217,5 @@
         </div>
     </div>
 
-    
 </body>
 </html>

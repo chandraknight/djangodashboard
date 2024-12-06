@@ -3,11 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Staff Dashboard - Dental Management System</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #555;
+        }
+
+        /* Navbar Style */
+        .navbar {
+            background-color: #3498db;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 18px;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ffeb3b;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .dashboard-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 40px;
+        }
+
+        .dashboard-container h1 {
+            font-size: 36px;
+            color: #3498db;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-container p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .dashboard-container a {
+            font-size: 18px;
+            background-color: #3498db;
+            padding: 15px 30px;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dashboard-container a:hover {
+            background-color: #2980b9;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container h1 {
+                font-size: 30px;
+            }
+
+            .navbar {
+                padding: 10px 20px;
+            }
+
+            .navbar a {
+                font-size: 14px;
+            }
+
+            .dashboard-container a {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome To staff Dashboard</h1>
 
-    <p>To add appointment <a href="{% url 'patientappointment' %}">Click Here</a></p>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">DentalCare</div>
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <h1>Welcome to the Staff Dashboard</h1>
+        <p>As a staff member, you can manage patient appointments and other details.</p>
+        <p>To add a new appointment, click the button below:</p>
+        <a href="{% url 'patientappointment' %}">Add Appointment</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 DentalCare. All Rights Reserved.
+    </div>
+
+    <!-- JS (optional) -->
+    <script>
+        // Example JS for future use: Popup message or interactions
+        document.querySelector('a').addEventListener('click', function(event) {
+            alert('You are about to add a new appointment!');
+        });
+    </script>
+
 </body>
 </html>

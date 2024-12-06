@@ -58,7 +58,8 @@ class LogoutView(View):
 
 
 
-
+def home(request):
+    return render(request, 'userauth/home.html')
 
 
 
