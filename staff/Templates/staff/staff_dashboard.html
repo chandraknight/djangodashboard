@@ -207,8 +207,11 @@
                     <td>{{ appointment.date }}</td>
                     <td>{{ appointment.status }}</td>
                     <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <a href="{% url 'updateappointment' appointment.id %}">
+                            <button>Edit</button>
+                        </a>
+                        
+                        
                     </td>
                 </tr>
             {% endfor %}

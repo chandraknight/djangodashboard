@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Appointment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f1f1f1;
+            color: #333;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #3498db;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ffeb3b;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            color: #3498db;
+            text-align: center;
+        }
+
+        .container p {
+            text-align: center;
+            color: #555;
+            margin: 10px 0 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        form button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        form button:hover {
+            background: #2980b9;
+        }
+
+        .cancel-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .cancel-link a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .cancel-link a:hover {
+            color: #c0392b;
+        }
+
+        /* Footer Styling */
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar a {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">DentalCare</div>
+        <div>
+            <a href="">Dashboard</a>
+            <a href="">Appointments</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Update Appointment</h2>
+        <p>Modify the appointment details below and save the changes.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update Appointment</button>
+        </form>
+        <div class="cancel-link">
+            <a href="{% url 'staffdashboardhome' %}">Cancel</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 DentalCare. All rights reserved.</p>
+    </div>
+</body>
+</html>

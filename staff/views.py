@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views import View
 from userauth.models import MyUser
 from appointment.models import Appointment
+from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
 
@@ -24,3 +26,17 @@ class StaffDashboard(View):
             'patients': patients,
             'doctors': doctors
         })
+
+class UpdateAppointmentView(UpdateView):
+    template_name='staff/update_appointment.html'
+    model=Appointment
+    fields=['patient', 'doctor', 'symptoms', 'date', 'status'] 
+
+    def get_success_url(self):
+    
+        return reverse_lazy('staffdashboardhome')
+
+class DeleteAppointmenrView(DeleteView):
+    template_name='staff/staff_dashboard.html'
+    model=Appointment
+    success_url = reverse_lazy("staffdashboardhome")
