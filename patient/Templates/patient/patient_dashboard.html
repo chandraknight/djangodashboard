@@ -16,12 +16,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             flex-direction: column;
         }
 
         .navbar {
             background-color: #3498db;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             padding: 15px 30px;
             display: flex;
@@ -29,6 +31,7 @@
             align-items: center;
             color: white;
             font-size: 16px;
+            z-index: 1000;
         }
 
         .navbar a {
@@ -51,6 +54,7 @@
 
         /* Dashboard Container */
         .dashboard-container {
+            margin-top: 80px; /* Adjusted for the navbar height */
             background: #ffffff;
             border-radius: 10px;
             width: 80%;
@@ -58,7 +62,6 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             padding: 30px;
             text-align: center;
-            margin-top: 20px;
         }
 
         h1 {

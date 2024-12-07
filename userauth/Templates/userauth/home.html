@@ -13,9 +13,6 @@
             padding: 0;
             background: #f4f4f9;
             color: #333;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
         /* Navbar Styling */
@@ -52,61 +49,34 @@
             font-weight: bold;
         }
 
-        /* Slider Styling */
-        .slider {
-            width: 100%;
-            height: 60vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .slider-images {
+        /* Hero Section */
+        .hero {
             display: flex;
-            transition: transform 1s ease-in-out;
-        }
-
-        .slider-images img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .slider-btns {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .slider-btn {
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 15px;
-            cursor: pointer;
-            font-size: 24px;
-        }
-
-        /* Main Content */
-        .container {
-            margin-top: 80px;
-            padding: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
             text-align: center;
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            color: white;
+            height: 70vh;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            color: #2c3e50;
+        .hero h1 {
+            font-size: 3rem;
             margin-bottom: 20px;
         }
 
-        .btn {
-            background-color: #3498db;
-            color: white;
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+
+        .hero .btn {
+            background-color: #ffeb3b;
+            color: #333;
             border: none;
             padding: 15px 30px;
-            margin: 20px;
             font-size: 18px;
             font-weight: bold;
             border-radius: 5px;
@@ -114,15 +84,15 @@
             transition: background-color 0.3s ease;
         }
 
-        .btn:hover {
-            background-color: #2980b9;
+        .hero .btn:hover {
+            background-color: #f39c12;
         }
 
         /* Services Section */
         .services {
             display: flex;
             justify-content: space-around;
-            padding: 40px 0;
+            padding: 40px 20px;
             background-color: #ecf0f1;
         }
 
@@ -135,53 +105,22 @@
             border-radius: 8px;
         }
 
+        .service-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
         .service-item h3 {
             font-size: 1.5rem;
             color: #3498db;
+            margin-top: 15px;
         }
 
         .service-item p {
             color: #555;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 40px;
-            background-color: #fff;
-            text-align: center;
-        }
-
-        .testimonial-item {
-            display: inline-block;
-            width: 30%;
-            margin: 10px;
-            background: #f1f1f1;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .testimonial-item p {
-            color: #555;
-            font-style: italic;
-        }
-
-        .testimonial-item h4 {
-            color: #3498db;
             margin-top: 10px;
-        }
-
-        /* Map Section */
-        .map {
-            padding: 40px;
-            text-align: center;
-        }
-
-        .map iframe {
-            width: 100%;
-            height: 400px;
-            border: none;
-            border-radius: 8px;
         }
 
         /* Footer */
@@ -209,15 +148,6 @@
                 width: 80%;
                 margin-bottom: 20px;
             }
-
-            .testimonial-item {
-                width: 80%;
-                margin-bottom: 20px;
-            }
-
-            .slider-btns {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -234,61 +164,37 @@
         </div>
     </div>
 
-    <!-- Image Slider -->
-    <div class="slider">
-        <div class="slider-images">
-            <img src="https://via.placeholder.com/1600x900/3498db/ffffff?text=Dental+Care+1" alt="Dental Image 1">
-            <img src="https://via.placeholder.com/1600x900/2980b9/ffffff?text=Dental+Care+2" alt="Dental Image 2">
-            <img src="https://via.placeholder.com/1600x900/2ecc71/ffffff?text=Dental+Care+3" alt="Dental Image 3">
-        </div>
-        <div class="slider-btns">
-            <button class="slider-btn" onclick="prevSlide()">&#10094;</button>
-            <button class="slider-btn" onclick="nextSlide()">&#10095;</button>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
         <h1>Welcome to DentalCare</h1>
-        <p>Your trusted partner in dental health.</p>
-        <button class="btn" ><a href="{%url 'login'%}">Login</a></button>
-        <button class="btn" ><a href="{% url 'register' %}">Sign up</a></button>
+        <p>Your smile is our priority! Experience the best dental care services with our team of experts.</p>
+        <button class="btn"><a href="{% url 'login' %}" style="color: inherit; text-decoration: none;">Login</a></button>
+        <button class="btn"><a href="{% url 'register' %}" style="color: inherit; text-decoration: none;">Sign up</a></button>
     </div>
 
     <!-- Services Section -->
     <div class="services">
         <div class="service-item">
+            <img src="https://via.placeholder.com/300x150/3498db/ffffff?text=Checkups" alt="General Checkups">
             <h3>General Checkups</h3>
-            <p>We offer regular dental checkups to maintain your oral health.</p>
+            <p>Regular dental checkups to maintain optimal oral health.</p>
         </div>
         <div class="service-item">
+            <img src="https://via.placeholder.com/300x150/2ecc71/ffffff?text=Cosmetic" alt="Cosmetic Dentistry">
             <h3>Cosmetic Dentistry</h3>
-            <p>From teeth whitening to veneers, we can enhance your smile.</p>
+            <p>Enhance your smile with teeth whitening and veneers.</p>
         </div>
         <div class="service-item">
+            <img src="https://via.placeholder.com/300x150/e74c3c/ffffff?text=Orthodontics" alt="Orthodontics">
             <h3>Orthodontics</h3>
-            <p>Our experts can help straighten your teeth and improve your bite.</p>
+            <p>Straighten your teeth with our advanced orthodontic treatments.</p>
         </div>
     </div>
 
-    <!-- Testimonials Section -->
-    <div class="testimonials">
-        <h2>What Our Patients Say</h2>
-        <div class="testimonial-item">
-            <p>"DentalCare has transformed my smile! The staff is amazing and so professional."</p>
-            <h4>Jane Doe</h4>
-        </div>
-        <div class="testimonial-item">
-            <p>"I had a fantastic experience. The clinic is clean, and the doctors are highly skilled."</p>
-            <h4>John Smith</h4>
-        </div>
-        <div class="testimonial-item">
-            <p>"The best dental clinic I've been to. Highly recommend them for all your dental needs!"</p>
-            <h4>Sarah Lee</h4>
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 DentalCare. All rights reserved. | <a href="#">Privacy Policy</a></p>
+    </footer>
 
-    <!-- Map Section -->
-    <div class="map">
-        <h2>Find Us Here</h2>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0000000000005!2d-122.4194!3d37.7749!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!
+</body>
+</html>
