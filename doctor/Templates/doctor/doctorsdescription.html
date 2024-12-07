@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #3498db;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ffeb3b;
+        }
+
+        /* Profile Container */
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .profile-header img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+        }
+
+        .profile-header h2 {
+            margin: 0;
+            font-size: 2rem;
+            color: #3498db;
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .detail-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+        .detail-item h4 {
+            margin: 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .detail-item p {
+            margin: 5px 0 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .availability {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .availability span {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .availability .available {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .availability .not-available {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        /* Footer Styling */
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">DentalCare</div>
+        <div>
+            <a href="">Dashboard</a>
+            <a href="">Doctors</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="{{ doctor_profiles.user.profilepicture.url }}" alt="{{ doctor_profiles.user.username }}">
+
+            <h2>Dr. {{ doctor_profiles.user.username }}</h2>
+        </div>
+
+        <div class="profile-details">
+            <div class="detail-item">
+                <h4>Doctor ID</h4>
+                <p>{{ doctor_profiles.doctor_id }}</p>
+            </div>
+            <div class="detail-item">
+                <h4>Email</h4>
+                <p>{{ doctor_profiles.user.email }}</p>
+            </div>
+            <div class="detail-item">
+                <h4>Phone Number</h4>
+                <p>{{ doctor_profiles.phone_number }}</p>
+            </div>
+            <div class="detail-item">
+                <h4>NMC Registered Number</h4>
+                <p>{{ doctor_profiles.NMC_registered_number }}</p>
+            </div>
+            <div class="detail-item">
+                <h4>Address</h4>
+                <p>{{ doctor_profiles.address }}</p>
+            </div>
+            <div class="detail-item">
+                <h4>Specialization</h4>
+                <p>{{ doctor_profiles.specialization }}</p>
+            </div>
+        </div>
+
+      
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 DentalCare. All rights reserved.</p>
+    </div>
+</body>
+</html>

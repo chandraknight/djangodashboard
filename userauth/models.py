@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager,PermissionsMixin
-
+from PIL import Image
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -41,7 +41,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         DOCTOR = "DOCTOR", "Doctor"
         PATIENT = "PATIENT", "Patient"
 
-    
+    profilepicture= models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     role=models.CharField(max_length=40, choices=Role.choices, default=Role.PATIENT)
     username= models.CharField(max_length=40, unique=True)
     email= models.EmailField(max_length=225, unique=True,db_index=True )
@@ -57,6 +57,17 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+
+        # if self.profile_picture:
+        #     img = Image.open(self.profile_picture.path)
+
+        #     # Resize image if it's larger than the desired dimensions
+        #     max_width, max_height = 300, 300
+        #     if img.height > max_height or img.width > max_width:
+        #         output_size = (max_width, max_height)
+        #         img.thumbnail(output_size)
+        #         img.save(self.profile_picture.path)
     #telling how to manage the user to django
     objects= UserManager()
     

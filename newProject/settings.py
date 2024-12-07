@@ -73,6 +73,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'newProject.wsgi.application'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+
 # STATIC_URL = "/static/"
 # STATIC_ROOT = BASE_DIR / "staticfiles"
 

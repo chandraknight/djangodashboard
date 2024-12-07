@@ -7,8 +7,10 @@ from django.views import View
 from django.views.generic import FormView
 from django.http import HttpResponseForbidden
 from userauth.models import MyUser
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from appointment.models import Appointment
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 
     
 # @check_role('doctor')
@@ -82,3 +84,13 @@ class DoctorsAppointment(ListView):
         
         # Filter appointments assigned to the logged-in doctor
         return Appointment.objects.filter(doctor=doctor)
+
+class DoctorDescriptionView(LoginRequiredMixin,DetailView):
+    model= DoctorProfile
+    template_name= 'doctor/doctorsdescription.html'
+    context_object_name= 'doctor_profiles'
+
+    def get_object(self):
+        # Fetch the DoctorProfile for the currently logged-in user
+        return get_object_or_404(DoctorProfile, user=self.request.user)
+    
