@@ -1,5 +1,6 @@
 # Python bytecode
 pycache/
+__pycache__
 *.py[cod]
 *$py.class
 # Django-specific
@@ -45,3 +46,4 @@ logs/
 # Coverage reports
 .coverage
 htmlcov/
+*.pyc
