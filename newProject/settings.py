@@ -88,14 +88,18 @@ MEDIA_URL = '/media/'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'DentalManagementDatabase',
+        'USER': 'postgres',
+        'PASSWORD': 'roshan@#12',
+        'HOST': 'localhost',  # Or your database server's IP
+        'PORT': '5432',       # Default PostgreSQL port
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
